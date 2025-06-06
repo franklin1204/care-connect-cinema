@@ -4,6 +4,7 @@ import VideoPlayer from '@/components/VideoPlayer';
 import ControlPanel from '@/components/ControlPanel';
 import ConnectionStatus from '@/components/ConnectionStatus';
 import CommandHistory from '@/components/CommandHistory';
+import CaregiverInput from '@/components/CaregiverInput';
 
 const Index = () => {
   const [isConnected, setIsConnected] = useState(false);
@@ -15,9 +16,6 @@ const Index = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsConnected(true);
-      // Simulate receiving initial video
-      setCurrentVideo("Elder-Friendly Nature Documentary");
-      addCommand("video_received", "Video link received from Sarah (Daughter)");
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -33,18 +31,24 @@ const Index = () => {
     setCommands(prev => [newCommand, ...prev.slice(0, 4)]);
   };
 
+  const handleSendVideo = (videoTitle: string) => {
+    setCurrentVideo(videoTitle);
+    setIsPlaying(false);
+    addCommand("video_received", `Video link received: ${videoTitle}`);
+  };
+
   const handlePlay = () => {
     setIsPlaying(true);
-    addCommand("play", "Play command from Sarah");
+    addCommand("play", "Play command from caregiver");
   };
 
   const handleStop = () => {
     setIsPlaying(false);
-    addCommand("stop", "Stop command from Sarah");
+    addCommand("stop", "Stop command from caregiver");
   };
 
   const handleVolumeChange = (volume: number) => {
-    addCommand("volume", `Volume set to ${volume}% by Sarah`);
+    addCommand("volume", `Volume set to ${volume}% by caregiver`);
   };
 
   return (
@@ -81,6 +85,7 @@ const Index = () => {
           
           {/* Control Panel & Command History */}
           <div className="space-y-6">
+            <CaregiverInput onSendVideo={handleSendVideo} />
             <ControlPanel 
               isPlaying={isPlaying}
               onPlay={handlePlay}
