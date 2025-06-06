@@ -1,5 +1,5 @@
 
-import { Play, Stop, Wifi } from 'lucide-react';
+import { Play, Square, Wifi } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -42,7 +42,7 @@ const ControlPanel = ({ isPlaying, onPlay, onStop, currentVideo }: ControlPanelP
             variant="outline"
             className="w-full py-6 text-lg border-2"
           >
-            <Stop className="w-6 h-6 mr-2" />
+            <Square className="w-6 h-6 mr-2" />
             Stop Video
           </Button>
         </div>

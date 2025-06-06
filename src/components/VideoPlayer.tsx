@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Play, Stop, Volume2 } from 'lucide-react';
+import { Play, Square, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 
@@ -79,7 +79,7 @@ const VideoPlayer = ({ currentVideo, isPlaying, onPlay, onStop, onVolumeChange }
               variant="outline"
               className="px-8 py-4 text-lg border-2"
             >
-              <Stop className="w-6 h-6 mr-2" />
+              <Square className="w-6 h-6 mr-2" />
               Stop
             </Button>
           </div>
