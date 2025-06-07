@@ -26,7 +26,7 @@ const ConnectionStatus = ({ isConnected }: ConnectionStatusProps) => {
       {isConnected && (
         <div className="flex items-center space-x-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full border border-blue-200">
           <User className="w-4 h-4" />
-          <span className="text-sm font-medium">Sarah (Daughter)</span>
+          <span className="text-sm font-medium">Caregiver</span>
         </div>
       )}
     </div>

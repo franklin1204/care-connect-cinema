@@ -1,25 +1,28 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import VideoPlayer from '@/components/VideoPlayer';
 import ControlPanel from '@/components/ControlPanel';
 import ConnectionStatus from '@/components/ConnectionStatus';
-import CommandHistory from '@/components/CommandHistory';
+// import CommandHistory from '@/components/CommandHistory';
 import CaregiverInput from '@/components/CaregiverInput';
 
 const Index = () => {
   const [isConnected, setIsConnected] = useState(false);
+  const [messages, setMessages] = useState([]);
   const [currentVideo, setCurrentVideo] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isStop, setIsStop] = useState(false);
   const [commands, setCommands] = useState<Array<{id: string, command: string, timestamp: Date, from: string}>>([]);
 
-  // Simulate caregiver connection
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsConnected(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
+    // This effect will run whenever isPlaying changes
+    if (isStop) {
+      addCommand("stop", "Stop command from caregiver");
+    } else {
+      if(isPlaying) addCommand("play", "Play command from caregiver");
+      else addCommand("Pause", "Pause command from caregiver");
+    }
+  }, [isPlaying, isStop]);
 
   const addCommand = (command: string, description: string) => {
     const newCommand = {
@@ -35,16 +38,6 @@ const Index = () => {
     setCurrentVideo(videoTitle);
     setIsPlaying(false);
     addCommand("video_received", `Video link received: ${videoTitle}`);
-  };
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-    addCommand("play", "Play command from caregiver");
-  };
-
-  const handleStop = () => {
-    setIsPlaying(false);
-    addCommand("stop", "Stop command from caregiver");
   };
 
   const handleVolumeChange = (volume: number) => {
@@ -77,8 +70,12 @@ const Index = () => {
             <VideoPlayer 
               currentVideo={currentVideo}
               isPlaying={isPlaying}
-              onPlay={handlePlay}
-              onStop={handleStop}
+              setIsPlaying={setIsPlaying}
+              isStop={isStop}
+              currentPosition={0}
+              setIsStop={setIsStop}
+              isConnected={isConnected}
+              setIsConnected={setIsConnected}
               onVolumeChange={handleVolumeChange}
             />
           </div>
@@ -88,11 +85,10 @@ const Index = () => {
             <CaregiverInput onSendVideo={handleSendVideo} />
             <ControlPanel 
               isPlaying={isPlaying}
-              onPlay={handlePlay}
-              onStop={handleStop}
+              isStop={isStop}
               currentVideo={currentVideo}
             />
-            <CommandHistory commands={commands} />
+            {/* <CommandHistory commands={commands} /> */}
           </div>
         </div>
       </div>

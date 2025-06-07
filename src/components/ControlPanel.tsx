@@ -5,12 +5,12 @@ import { Card } from '@/components/ui/card';
 
 interface ControlPanelProps {
   isPlaying: boolean;
-  onPlay: () => void;
-  onStop: () => void;
+  isStop: boolean;
   currentVideo: string | null;
 }
 
-const ControlPanel = ({ isPlaying, onPlay, onStop, currentVideo }: ControlPanelProps) => {
+const ControlPanel = ({ isPlaying, isStop, currentVideo }: ControlPanelProps) => {
+  console.log(isStop);
   return (
     <Card className="p-6 bg-white shadow-lg">
       <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
@@ -22,11 +22,11 @@ const ControlPanel = ({ isPlaying, onPlay, onStop, currentVideo }: ControlPanelP
         <div className="bg-gray-50 rounded-lg p-4">
           <p className="text-sm text-gray-600 mb-2">Current Status:</p>
           <p className="font-medium text-gray-800">
-            {currentVideo ? (isPlaying ? 'Playing' : 'Paused') : 'No video loaded'}
+            {currentVideo ? (isStop ? 'Stop' : (isPlaying ? 'Playing' : 'Paused')) : 'No video loaded'}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-3">
+        {/* <div className="grid grid-cols-1 gap-3">
           <Button
             onClick={onPlay}
             disabled={!currentVideo}
@@ -45,7 +45,7 @@ const ControlPanel = ({ isPlaying, onPlay, onStop, currentVideo }: ControlPanelP
             <Square className="w-6 h-6 mr-2" />
             Stop Video
           </Button>
-        </div>
+        </div> */}
 
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <p className="text-sm text-blue-700">
