@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Send, Link } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,28 +11,43 @@ interface CaregiverInputProps {
 
 const CaregiverInput = ({ onSendVideo }: CaregiverInputProps) => {
   const [videoLink, setVideoLink] = useState('');
+  // const ws = useRef<WebSocket | null>(null);
+  // ws.current = new WebSocket('ws://localhost:8080');
+
+  // const sendData = (data: any) => {
+  //   if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+  //     ws.current.send(JSON.stringify(data));
+  //   }
+  // };
+
+  const handleClick = () => {
+    const message = { type: 'greet', payload: 'Hello, server!' };
+    // sendData(message);
+  };
 
   const handleSendVideo = () => {
     if (videoLink.trim()) {
       // Extract a title from the URL or use the URL itself
-      const videoTitle = extractVideoTitle(videoLink);
-      onSendVideo(videoTitle);
+      // const message = { videoLink };
+      // sendData(message);
+      // const videoTitle = extractVideoTitle(videoLink);
+      onSendVideo(videoLink);
       setVideoLink('');
     }
   };
 
-  const extractVideoTitle = (url: string) => {
-    // Simple title extraction logic
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      return 'YouTube Video';
-    } else if (url.includes('netflix.com')) {
-      return 'Netflix Show';
-    } else if (url.includes('vimeo.com')) {
-      return 'Vimeo Video';
-    } else {
-      return url.length > 30 ? url.substring(0, 30) + '...' : url;
-    }
-  };
+  // const extractVideoTitle = (url: string) => {
+  //   // Simple title extraction logic
+  //   if (url.includes('youtube.com') || url.includes('youtu.be')) {
+  //     return 'YouTube Video';
+  //   } else if (url.includes('netflix.com')) {
+  //     return 'Netflix Show';
+  //   } else if (url.includes('vimeo.com')) {
+  //     return 'Vimeo Video';
+  //   } else {
+  //     return url.length > 30 ? url.substring(0, 30) + '...' : url;
+  //   }
+  // };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
